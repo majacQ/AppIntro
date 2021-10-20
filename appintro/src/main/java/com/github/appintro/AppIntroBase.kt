@@ -99,6 +99,11 @@ abstract class AppIntroBase : AppCompatActivity(), AppIntroViewPagerListener {
      * */
     protected var isVibrate = false
 
+    /**
+     * Read-only property with the total number of slides for this AppIntro.
+     */
+    protected val totalSlidesNumber: Int get() = slidesNumber
+
     // Private Fields
 
     private lateinit var pagerAdapter: PagerAdapter
@@ -174,6 +179,7 @@ abstract class AppIntroBase : AppCompatActivity(), AppIntroViewPagerListener {
     }
 
     /** Moves the AppIntro to the next slide */
+    @JvmOverloads
     protected fun goToNextSlide(isLastSlide: Boolean = pager.isLastSlide(fragments.size)) {
         if (isLastSlide) {
             onIntroFinished()
@@ -246,6 +252,7 @@ abstract class AppIntroBase : AppCompatActivity(), AppIntroViewPagerListener {
         ReplaceWith("setSwipeLock"),
         DeprecationLevel.ERROR
     )
+    @Suppress("UnusedPrivateMember")
     protected fun setNextPageSwipeLock(lock: Boolean) {
         LogHelper.w(
             TAG,
@@ -786,7 +793,9 @@ abstract class AppIntroBase : AppCompatActivity(), AppIntroViewPagerListener {
             currentlySelectedItem = position
         }
 
-        override fun onPageScrollStateChanged(state: Int) {}
+        override fun onPageScrollStateChanged(state: Int) {
+            // no-op
+        }
     }
 
     private companion object {
